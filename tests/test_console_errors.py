@@ -1,7 +1,5 @@
 import pytest
-import sys
-sys.path.append('C:/development/playwright_test/config')
-from config import BASE_URL
+from config.config import BASE_URL
 # from playwright.async_api import Page, expect, async_playwright
 from playwright.sync_api import Page, expect
 
