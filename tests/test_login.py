@@ -4,7 +4,6 @@ from utils.conftest import read_json_file
 from playwright.sync_api import Page, expect
 
 
-
 @pytest.mark.parametrize("user_index", [0])  # Test with specific user
 @pytest.mark.login
 def test_login(page: Page, read_json_file, user_index):

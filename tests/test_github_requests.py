@@ -7,6 +7,7 @@ from datetime import datetime
 
 @pytest.mark.api
 def test_fetch_open_pull_requests():
+    """Test to fetch all rhe open pull requests."""
     repo_url = "https://api.github.com/repos/appwrite/appwrite/pulls"
     try:
         response = requests.get(repo_url, params={"state": "open"}) #sync
