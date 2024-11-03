@@ -9,6 +9,8 @@ def test_console_errors(page: Page):
     """Test to ensure no console errors appear on the About page."""
     errors = []
     page.on("console", lambda msg: errors.append(msg.text) if msg.type == "error" else None)
-    page.goto(f"{BASE_URL}/about.html")
-    assert not errors, f"Console errors found: {errors}"
-
+    try:
+        page.goto(f"{BASE_URL}/about.html")
+        assert not errors, f"Console errors found: {errors}"
+    except Exception as e:
+        pytest.fail(f"An error occurred during the test: {str(e)}")

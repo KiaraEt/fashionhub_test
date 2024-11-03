@@ -2,7 +2,7 @@ import json
 import pytest
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def read_json_file():
     """Fixture to read JSON files located in the data directory."""
     def _read_json_file(file_name):
