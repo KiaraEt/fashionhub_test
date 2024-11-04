@@ -6,7 +6,8 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 ENV = os.getenv('ENV', 'local')  # Default to local if not set
-BASE_URL = os.getenv('BASE_URL', 'http://localhost:4000/fashionhub')
+BASE_URL = os.getenv('BASE_URL', 'https://pocketaces2.github.io/fashionhub')
+RUNNING_IN_DOCKER = os.getenv('RUNNING_IN_DOCKER', 'false').lower() == 'true'
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -21,23 +22,29 @@ if not os.path.exists(results_dir):
 
 
 def run_tests():
-    """Run Playwright tests and generate an HTML report."""
+    """Run Playwright tests in multiple browsers (if in Docker) and generate HTML reports."""
     logger.info("Starting Playwright tests...")
 
-    # The command can be modified based on running test needed
-    command = f"pytest -s --html={results_dir}/report.html --self-contained-html"
-    # logger.info("command:", command)
+    # Define the list of browsers for multi-browser testing
+    browsers = ["chromium", "firefox", "webkit"] if RUNNING_IN_DOCKER else ["chromium"]
 
-    try:
-        result = subprocess.run(command, shell=True, check=True, text=True, stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
-        logger.info("Tests completed successfully.")
-        logger.info(result.stdout)
-    except subprocess.CalledProcessError as e:
-        logger.error("An error occurred while running tests.")
-        # Enhanced logging for error details
-        logger.error("STDOUT: %s", e.stdout)
-        logger.error("STDERR: %s", e.stderr)
+    for browser in browsers:
+        # Generate a separate report for each browser
+        report_file = f"{results_dir}/report_{browser}.html"
+        command = f"pytest -s --html={report_file} --self-contained-html --browser={browser}"
+
+        logger.info(f"Running tests in {browser}...")
+
+        try:
+            # Run the tests
+            result = subprocess.run(command, shell=True, check=True, text=True, stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE)
+            logger.info(f"Tests completed successfully in {browser}.")
+            logger.info(result.stdout)
+        except subprocess.CalledProcessError as e:
+            logger.error(f"An error occurred while running tests in {browser}.")
+            logger.error("STDOUT: %s", e.stdout)
+            logger.error("STDERR: %s", e.stderr)
 
 
 if __name__ == "__main__":

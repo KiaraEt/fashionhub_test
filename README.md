@@ -65,3 +65,6 @@ To run the automated tests in this project, ensure you have followed the install
    # Example for localhost - on Windows
    docker run -it --mount type=bind,source="$(pwd)"/,target=/app -e BASE_URL='https://pocketaces2.github.io/fashionhub' fashionhub_tests
    
+4. Run the test in a Docker container for different browsers
+   ```bash
+    docker run -it --mount type=bind,source="$(pwd)"/,target=/app -e BASE_URL='https://pocketaces2.github.io/fashionhub' -e RUNNING_IN_DOCKER=true fashionhub_tests
