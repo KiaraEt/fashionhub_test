@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
-ENV = os.getenv('ENV', 'local')  # Default to local if not set
+ENV = os.getenv('ENV', 'production')  # Set Default, if env is not set
 BASE_URL = os.getenv('BASE_URL', 'https://pocketaces2.github.io/fashionhub')
 RUNNING_IN_DOCKER = os.getenv('RUNNING_IN_DOCKER', 'false').lower() == 'true'
 
@@ -50,8 +50,6 @@ def run_tests():
 if __name__ == "__main__":
     if ENV == 'local':
         logger.info("Running tests in local environment with BASE_URL: %s", BASE_URL)
-    elif ENV == 'development':
-        logger.info("Running tests in development environment with BASE_URL: %s", BASE_URL)
     elif ENV == 'staging':
         logger.info("Running tests in staging environment with BASE_URL: %s", BASE_URL)
     elif ENV == 'production':
