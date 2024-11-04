@@ -57,10 +57,11 @@ To run the automated tests in this project, ensure you have followed the install
 
 2. Run the tests in a Docker container:
    ```bash
-    docker run --env-file .env -p 8000:8000 playwright-automation
+    docker run -it --mount type=bind,source="$(pwd)"/,target=/app -e BASE_URL='http://host.docker.internal:4000/fashionhub' fashionhub_tests
 
 3. Run the test in a Docker container for a specific environment:
    ```bash
-   docker run -e ENV=development -p 8000:8000 fashionhub_tests
+   docker run -it --mount type=bind,source="$(pwd)"/,target=/app -e BASE_URL='env_base_url' fashionhub_tests
+   # Example for localost in windows
+   docker run -it --mount type=bind,source="$(pwd)"/,target=/app -e BASE_URL='https://pocketaces2.github.io/fashionhub' fashionhub_tests
    
-4. 
