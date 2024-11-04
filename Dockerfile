@@ -1,8 +1,10 @@
+# Use the official slim Python 3.12.5 image
 FROM python:3.12.5-slim
 
+# Set working directory
 WORKDIR /app
 
-# Copy requirements and .env before copying other files
+# Copy requirements and install dependencies early to optimize caching
 COPY requirements.txt .
 
 # Install system dependencies required for Playwright
@@ -29,19 +31,20 @@ RUN apt-get update && \
         libasound2 \
     && rm -rf /var/lib/apt/lists/*
 
-
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Install Playwright and required browsers
+RUN pip install playwright && playwright install --with-deps
+
+# Copy the rest of the project files
 COPY . .
 
-# Install Playwright browsers
-RUN pip install playwright
-RUN playwright install
+# Set the environment variable to signal running in Docker
+ENV RUNNING_IN_DOCKER=true
 
+# Expose port if needed by the application
 EXPOSE 8000
 
-## Run the main.py script
+# Default command to run the main.py script
 CMD ["python", "main.py"]
-
-## Set the ENV variable when you run the container using the -e flag.
-# docker run -e ENV=development -p 8000:8000 your_image_name
