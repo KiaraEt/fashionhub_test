@@ -16,7 +16,7 @@ Before running this project, make sure the following tools and dependencies are 
 - Python 3.x
 - Docker
 - Jenkins (if applicable)
-- Other requirements: Playwright, Playwright,..
+- Other requirements: python, Playwright,..
 
 Ensure that all the requirements are installed along with the necessary browsers. This can be done via the requirements.txt file.
 
@@ -62,6 +62,6 @@ To run the automated tests in this project, ensure you have followed the install
 3. Run the test in a Docker container for a specific environment:
    ```bash
    docker run -it --mount type=bind,source="$(pwd)"/,target=/app -e BASE_URL='env_base_url' fashionhub_tests
-   # Example for localhost on Windows
+   # Example for localhost - on Windows
    docker run -it --mount type=bind,source="$(pwd)"/,target=/app -e BASE_URL='https://pocketaces2.github.io/fashionhub' fashionhub_tests
    
