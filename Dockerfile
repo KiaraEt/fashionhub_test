@@ -4,8 +4,6 @@ WORKDIR /app
 
 # Copy requirements and .env before copying other files
 COPY requirements.txt .
-COPY .env ./
-
 
 # Install system dependencies required for Playwright
 RUN apt-get update && \
