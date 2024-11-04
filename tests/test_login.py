@@ -24,5 +24,9 @@ def test_login(page: Page, read_json_file, user_index):
         page.get_by_role("button", name="Login").click()
 
         # Check if login was successful
+
+        # Wait for the heading to be visible
+        page.wait_for_selector("h1", timeout=10000)  # Adjust selector based on your HTML
+
         expect(page.get_by_role("heading", name="Welcome, testUser!")).to_be_visible()
         assert page.url == f"{BASE_URL}/account.html", "User was not redirected to the account page after login."

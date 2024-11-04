@@ -53,14 +53,14 @@ To run the automated tests in this project, ensure you have followed the install
 ## Docker Integration
 1. Build the Docker image:
    ```bash
-   docker build -t my_playwright_tests .
+   docker build -t fashionhub_tests .
 
 2. Run the tests in a Docker container:
    ```bash
-   docker run --rm -v $(pwd)/results:/app/results playwright-automation
+    docker run --env-file .env -p 8000:8000 playwright-automation
 
 3. Run the test in a Docker container for a specific environment:
    ```bash
-   docker run -e ENV=development -p 8000:8000 your_image_name
+   docker run -e ENV=development -p 8000:8000 fashionhub_tests
    
 4. 
